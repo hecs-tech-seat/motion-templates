@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>產業 Motion 樣板庫</title>
+<meta name="description" content="保養品、保健食品、食品與背包的公開動態影像參考目錄。連結原作者，不轉存影片。">
+<style>
+  :root {
+    --paper: #efe6d6;
+    --sheet: #f7f1e6;
+    --ink: #1c1712;
+    --muted: #5e564c;
+    --line: #d4c8b4;
+    --oxide: #8d3b2b;
+    --oxide-deep: #6d2c20;
+    --sage: #3f5344;
+    --amber: #8a5a22;
+    --stone: #3d4650;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "PingFang TC", "Noto Sans CJK TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.55;
+  }
+  a { color: var(--oxide-deep); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 64px; }
+  header.site {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+  }
+  .kicker {
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--oxide);
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-family: "Songti TC", "Noto Serif CJK TC", "PMingLiU", Palatino, "Iowan Old Style", serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 58px);
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .lede { max-width: 62ch; color: var(--muted); margin: 10px 0 0; font-size: 16px; }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 18px 0 8px;
+  }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  button.chip, button.card, button.close {
+    font: inherit;
+    cursor: pointer;
+  }
+  button.chip {
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 8px 14px;
+    min-height: 40px;
+  }
+  button.chip[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  input[type="search"] {
+    flex: 1 1 220px;
+    min-height: 44px;
+    border: 1px solid var(--ink);
+    background: var(--sheet);
+    color: var(--ink);
+    padding: 8px 12px;
+    font: inherit;
+    border-radius: 0;
+  }
+  .count { color: var(--muted); font-size: 14px; margin: 8px 0 16px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  button.card {
+    text-align: left;
+    border: 1px solid var(--line);
+    background: var(--sheet);
+    color: inherit;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  button.card:focus-visible, button.chip:focus-visible, a:focus-visible, button.close:focus-visible {
+    outline: 2px solid var(--oxide);
+    outline-offset: 2px;
+  }
+  .poster {
+    height: 148px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #f6f1e8;
+    position: relative;
+    overflow: hidden;
+  }
+  .poster::before, .poster::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(246,241,232,0.35);
+  }
+  .poster::before { width: 72px; height: 72px; right: -18px; top: -22px; border-radius: 50%; }
+  .poster::after { width: 90px; height: 18px; left: -10px; bottom: 22px; transform: rotate(-8deg); }
+  .poster .ind { font-size: 12px; letter-spacing: 0.12em; }
+  .poster .mark {
+    font-family: Palatino, "Songti TC", serif;
+    font-size: 28px;
+    line-height: 1;
+  }
+  .skincare { background: #8d3b2b; }
+  .supplements { background: #3f5344; }
+  .food { background: #8a5a22; }
+  .bags { background: #3d4650; }
+  .body { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .body h2 {
+    font-family: "Songti TC", "Noto Serif CJK TC", Palatino, serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .meta { color: var(--muted); font-size: 13px; }
+  .motion { font-size: 14px; margin-top: auto; }
+  dialog {
+    width: min(720px, calc(100vw - 24px));
+    border: 1px solid var(--ink);
+    background: var(--sheet);
+    color: var(--ink);
+    padding: 0;
+    margin: auto;
+  }
+  dialog::backdrop { background: rgba(28,23,18,0.45); }
+  .dialog-inner { padding: 22px 22px 26px; }
+  .dialog-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  button.close {
+    border: 1px solid var(--ink);
+    background: transparent;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .detail h3 {
+    font-family: "Songti TC", Palatino, serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 0 0 6px;
+  }
+  .en { color: var(--muted); margin: 0 0 14px; }
+  dl { display: grid; grid-template-columns: 7em 1fr; gap: 8px 12px; margin: 0 0 16px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  .block {
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+  .block h4 { margin: 0 0 6px; font-size: 15px; }
+  .label {
+    display: inline-block;
+    border: 1px solid var(--oxide);
+    color: var(--oxide-deep);
+    font-size: 12px;
+    padding: 2px 6px;
+    margin-bottom: 6px;
+  }
+  .source {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    padding: 10px 14px;
+    min-height: 44px;
+  }
+  footer {
+    margin-top: 36px;
+    border-top: 1px solid var(--ink);
+    padding-top: 16px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .empty { padding: 24px 0; color: var(--muted); }
+  @media (max-width: 640px) {
+    dl { grid-template-columns: 1fr; gap: 2px; }
+    dd { margin-bottom: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <div>
+      <p class="kicker">Reference index · 不轉存影片</p>
+      <h1>產業 Motion 樣板庫</h1>
+      <p class="lede">給保養品、保健食品、食品與背包案子用的公開動態參考。每張卡片連到原作者頁面。動作筆記是我們看過頁面後寫的一句話；提示詞只有原貼寫出來才收錄，其餘標為原貼未公開提示詞。</p>
+    </div>
+  </header>
+  <div class="toolbar">
+    <div class="filters" role="group" aria-label="產業篩選">
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">全部</button>
+      <button class="chip" type="button" data-filter="skincare" aria-pressed="false">保養品</button>
+      <button class="chip" type="button" data-filter="supplements" aria-pressed="false">保健食品</button>
+      <button class="chip" type="button" data-filter="food" aria-pressed="false">食品</button>
+      <button class="chip" type="button" data-filter="bags" aria-pressed="false">背包</button>
+    </div>
+    <input id="q" type="search" placeholder="搜尋品牌、作者、動作" aria-label="關鍵字搜尋">
+  </div>
+  <p class="count" id="count"></p>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>沒有符合的參考。</p>
+  <footer>
+    <p>本站條目是參考目錄，連結到原作者與原平台，不是我們的資產。我們不下載、不轉存他人影片或畫面。海報色塊是本站自製的分類框，不是原作截圖。</p>
+    <p>整理給 Wolfgang Huang 的客戶產業：保養品、保健食品、食品、背包。公開頁，可供檢索。</p>
+  </footer>
+</div>
+<dialog id="detail">
+  <div class="dialog-inner">
+    <div class="dialog-top">
+      <div class="detail" id="detail-body"></div>
+      <button class="close" type="button" id="close" aria-label="關閉">關閉</button>
+    </div>
+  </div>
+</dialog>
+<script>
+const INDUSTRY = {
+  skincare: "保養品",
+  supplements: "保健食品",
+  food: "食品",
+  bags: "背包"
+};
+const ITEMS = [
+  {
+    id: "ks-supercell",
+    industry: "skincare",
+    title: "Kate Somerville 精華滾珠",
+    original: "Kate Somerville Supercell Serum",
+    author: "SIMULATED／Mandy Stoller",
+    platform: "工作室網站",
+    url: "https://simulatedstudio.com/projects/kate-somerville-supercell",
+    motion: "約十五秒 CGI：滾珠頭、絲質精華與瓶身特寫。",
+    authorPrompt: null,
+    draft: "近黑背景，玻璃精華瓶緩慢自轉。滾珠頭接觸一道細光，透明精華沿曲面拉成絲，再收回瓶口。鏡頭只推一次，節奏安靜。"
+  },
+  {
+    id: "111-y",
+    industry: "skincare",
+    title: "111Skin 修護精華",
+    original: "111Skin Y-Theorem Repair Serum CGI",
+    author: "Lux Studio London／Guy Welch",
+    platform: "工作室網站",
+    url: "https://movingimage.london/productions/111skin-y-theorem-repair-serum-cgi-animation",
+    motion: "燈光、鏡頭與瓶身動畫，修護精華的 CGI 產品片。",
+    authorPrompt: null,
+    draft: "冷白桌面，修復精華瓶直立。一滴精華落下後在瓶肩散成薄膜，鏡頭繞半圈停在標籤。不要旁白，只要材質聲。"
+  },
+  {
+    id: "rayan",
+    industry: "skincare",
+    title: "RAYAN 琥珀精華",
+    original: "RAYAN skincare",
+    author: "Pivot Studio",
+    platform: "工作室網站",
+    url: "https://wepivotstudio.com/work/rayan",
+    motion: "全 CGI：琥珀色液滴、玻璃與氣泡的產品動態語言。",
+    authorPrompt: null,
+    draft: "琥珀玻璃瓶在暖色光裡微傾。氣泡從液面升起後停住，一滴精華懸在瓶口，再落回。色調只留琥珀與深棕。"
+  },
+  {
+    id: "fenty",
+    industry: "skincare",
+    title: "Fenty 夏日精華與蜜粉",
+    original: "Fenty. Summer Campaign",
+    author: "NotReal®／Valeria Moreiro（動畫指導 Macarena Mosquera）",
+    platform: "Behance",
+    url: "https://www.behance.net/gallery/230148577/Fenty-Summer-Campaign-",
+    motion: "保濕精華配氣泡與放大果凍水果，另有蜜粉段落。",
+    authorPrompt: null,
+    draft: "高飽和夏日桌面。保濕精華瓶被透明氣泡托起，旁邊果凍水果輕微彈動。切到蜜粉盒開合一次。節奏偏廣告，不超過二十秒。"
+  },
+  {
+    id: "shiseido",
+    industry: "skincare",
+    title: "資生堂怡麗絲爾時光精華",
+    original: "Shiseido Elixir Design Time Serum",
+    author: "GOOSEBUMPS／Gabriel Morala",
+    platform: "工作室網站",
+    url: "https://bygoosebumps.com/work/shiseido-elixir-design-time-serum/",
+    motion: "金色穹頂、乳霜與分子模擬，講膠原支撐。",
+    authorPrompt: null,
+    draft: "金色圓頂緩緩升起，乳霜在表面形成細密紋理，分子結構輕輕展開後收成瓶身。鏡頭穩定，像實驗室而不是派對。"
+  },
+  {
+    id: "skii",
+    industry: "skincare",
+    title: "SK-II 青春露",
+    original: "SK-II Facial Treatment Essence",
+    author: "jformento.",
+    platform: "Vimeo",
+    url: "https://vimeo.com/1172062706",
+    motion: "電影感 CGI，拆解 PITERA 的流動與品牌質地。",
+    authorPrompt: null,
+    draft: "深色空間裡，清澈精華像布一樣流動，經過瓶身後變成一層薄光。鏡頭橫移，停在經典瓶型。不要口播。"
+  },
+  {
+    id: "nature-elite",
+    industry: "skincare",
+    title: "Nature Elite 彩妝產品動畫",
+    original: "Nature Elite - Cosmetic 3D Product Animation",
+    author: "RainStyle production",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=mcNNy2aEqhw",
+    motion: "彩妝瓶罐的 3D 產品動畫。",
+    authorPrompt: null,
+    draft: "一組護膚瓶依序轉到正面，每瓶停半秒。最後一瓶打開，膏體或液體只露出一點。背景乾淨，適合直式裁切。"
+  },
+  {
+    id: "ahad",
+    industry: "skincare",
+    title: "護膚瓶 3D 短片",
+    original: "Skincare 3D Product Visualization",
+    author: "Ahad Animates",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=9fJaX-4DBfc",
+    motion: "Blender 短片：護膚瓶的產品視覺化。",
+    authorPrompt: null,
+    draft: "直式九比十六。霧面泵瓶從暗處轉出，泵頭按一下，乳霜在瓶口堆成小山再抹平。循環可接回第一幀。"
+  },
+  {
+    id: "laneige",
+    industry: "skincare",
+    title: "蘭芝 Glow & Grow",
+    original: "[OFFICIAL] LANEIGE - Glow & Grow Together",
+    author: "LANEIGE Thailand",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=8CqWcbKUEX0",
+    motion: "品牌廣告片，產品與人物一起出現，不是純產品循環。",
+    authorPrompt: null,
+    draft: "先給臉部光澤的近景，再切到乳霜罐被打開。人物手部只入鏡一次，最後停在罐子正面。可改成十五秒直式。"
+  },
+  {
+    id: "lrp",
+    industry: "skincare",
+    title: "理膚寶水禮盒降落",
+    original: "La Roche-Posay gift sets for Boots",
+    author: "One Agency",
+    platform: "工作室案例",
+    url: "https://oneagencymedia.co.uk/case_studies/la-roche-posay/",
+    motion: "禮盒由品牌降落傘帶著落下，落在 Boots 店前。",
+    authorPrompt: null,
+    draft: "三個禮盒掛著小型降落傘，從上往下，布料有重量。中央盒子正對鏡頭落地，包裝文字不被布遮住。結尾是店面與禮盒同框。"
+  },
+  {
+    id: "ordinary-jp",
+    industry: "skincare",
+    title: "The Ordinary 渋谷斑馬線",
+    original: "The Ordinary Japan CGI, Hyaluronic Acid 2% + B5",
+    author: "One Agency／Nicole Menzies",
+    platform: "工作室案例",
+    url: "https://oneagencymedia.co.uk/case_studies/the-ordinary-japan-cgi/",
+    motion: "人潮走過斑馬線，走出玻尿酸瓶的輪廓。",
+    authorPrompt: null,
+    draft: "俯視路口。號誌先換成品牌色，行人走過後地面留下滴管瓶的輪廓。動作清楚、不要複雜特效堆疊。"
+  },
+  {
+    id: "perla",
+    industry: "supplements",
+    title: "PerlaHelsa 保健包裝",
+    original: "PerlaHelsa CGI product video",
+    author: "MAD CGI",
+    platform: "工作室網站",
+    url: "https://www.madcgi.com/projects/perlahelsa",
+    motion: "包裝、成分微距與多色版本的 3D 產品動畫。",
+    authorPrompt: null,
+    draft: "保健瓶轉到標籤正面，切進成分粉末的微距，再回到包裝。做兩個色款切換，方便電商與限動。"
+  },
+  {
+    id: "ritual",
+    industry: "supplements",
+    title: "Ritual 從霧到清楚",
+    original: "Ritual Let's Be Clear",
+    author: "Scholar／創意總監 Will Johnson",
+    platform: "工作室網站",
+    url: "https://helloscholar.com/project/ritual-lets-be-clear",
+    motion: "霧氣裡瓶子逐漸對焦，膠囊以穩定節奏移動，主色是招牌黃。",
+    authorPrompt: "Let’s be clear.",
+    authorPromptNote: "頁面寫的是創意起點句，不是生成模型用的提示詞。",
+    draft: "畫面從柔焦霧氣開始，透明瓶與膠囊慢慢變清楚。主色只用一種黃。膠囊一顆接一顆經過焦平面，不要亂飛。"
+  },
+  {
+    id: "ag-swanson",
+    industry: "supplements",
+    title: "Athletic Greens 粉末與液體",
+    original: "Athletic Greens",
+    author: "Swanson Studio",
+    platform: "工作室網站",
+    url: "https://www.swansonstudio.us/work/athletic-greens",
+    motion: "用光與運動看粉末、液體、玻璃與金屬，偏儀式感的產品影像。",
+    authorPrompt: null,
+    draft: "綠粉落進清水，玻璃勺攪半圈就停。金屬蓋放在旁邊。光線乾淨，像編輯靜物而不是健身房廣告。"
+  },
+  {
+    id: "ag1-dc",
+    industry: "supplements",
+    title: "AG1 品牌短片 DC",
+    original: "AG1 by Athletic Greens / DC",
+    author: "Ivan Jurado",
+    platform: "Vimeo",
+    url: "https://vimeo.com/900759180",
+    motion: "AG1 品牌影片。頁面未寫分鏡細節。",
+    authorPrompt: null,
+    draft: "清晨桌面，綠色罐裝粉倒入杯中，水面只攪出一個旋。人只露手。最後是杯子與罐子並排。"
+  },
+  {
+    id: "ag1-yt",
+    industry: "supplements",
+    title: "AG1 官方影片",
+    original: "AG1 by Athletic Greens",
+    author: "AG1",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=lkH9owzJ3Pk",
+    motion: "品牌官方影片，作為保健食品廣告語氣的參考。",
+    authorPrompt: null,
+    draft: "一個人在廚房開罐、倒粉、喝下。中間插入成分以簡單圖示帶過，結尾是產品與日常桌面。"
+  },
+  {
+    id: "ibero",
+    industry: "supplements",
+    title: "IberoBiotics 腸道花園",
+    original: "IberoBiotics",
+    author: "Rocketansky／Storz & Escherich（客戶 Bayer，代理商 GGH MullenLowe）",
+    platform: "工作室網站",
+    url: "https://www.storzescherich.de/portfolio/iberobiotics/",
+    motion: "全 CGI 花園比喻腸道恢復：平衡、生長、自然過程。",
+    authorPrompt: null,
+    draft: "乾燥土壤慢慢長出整齊的植物，鏡頭從微距拉到一座小花園。不要卡通角色，用植物生長代表腸道狀態。"
+  },
+  {
+    id: "synteract",
+    industry: "supplements",
+    title: "Synteract Bimbi 益生菌角色",
+    original: "Synteract Bimbi",
+    author: "mBanga Studio／Pietro Ciccotti（客戶 OfMom）",
+    platform: "工作室網站",
+    url: "https://www.mbangastudio.com/synteract-bimbi/",
+    motion: "三個益生菌角色進入腸道後，頭上的植物長成彩色森林。",
+    authorPrompt: null,
+    draft: "三個小角色帶著幼苗走進柔軟的腸道空間，植物依序開花。語氣給兒童保健，動作清楚、顏色分開。"
+  },
+  {
+    id: "protexin",
+    industry: "supplements",
+    title: "Protexin 寵物保健",
+    original: "Protexin Veterinary",
+    author: "Holey & Moley（客戶 Protexin／T&S Advertising）",
+    platform: "工作室網站",
+    url: "https://holeyandmoley.com/portfolio/protexin-veterinary/",
+    motion: "角色動畫加上產品靜照的 3D 投影，做品牌說明。",
+    authorPrompt: null,
+    draft: "寵物與包裝同框。角色動作簡單，包裝用實拍感的轉動，不要把說明文字塞滿畫面。"
+  },
+  {
+    id: "cast-probiotics",
+    industry: "supplements",
+    title: "益生菌產品線模組",
+    original: "Probiotics",
+    author: "CAST PHARMA",
+    platform: "工作室網站",
+    url: "https://www.cast-pharma.com/portfolio/probiotics/",
+    motion: "五支產品分段說明，放大窗標出腸道三個作用區。",
+    authorPrompt: null,
+    draft: "先總覽腸道三個區域，再一支產品對一個區域。每段可獨立剪出。風格跟既有品牌主視覺，不要另做一套。"
+  },
+  {
+    id: "poppi",
+    industry: "food",
+    title: "POPPI 汽水罐變形",
+    original: "POPPI",
+    author: "PrePost 3D",
+    platform: "工作室網站",
+    url: "https://www.prepost3d.com/poppi",
+    motion: "罐身變形、液體模擬、水果與覆盆子爆開。",
+    authorPrompt: null,
+    draft: "汽水罐先被捏出一點，再彈回。水果從罐口爆開後收成液面。顏色跟口味一致，適合直式。"
+  },
+  {
+    id: "ld-cody",
+    industry: "food",
+    title: "Liquid Death 逐格動態",
+    original: "Liquid Death — Death To Plastic",
+    author: "Cody Pham",
+    platform: "作品集",
+    url: "https://www.cody-pham.com/work/liquid-death",
+    motion: "逐格畫出來的動態廣告，不是寫實產品轉台。",
+    authorPrompt: null,
+    draft: "鋁罐以逐格方式被畫出來，塑膠瓶在旁邊碎掉或退場。線條粗、對比高，最後只留罐子。"
+  },
+  {
+    id: "ld-official",
+    industry: "food",
+    title: "Liquid Death 官方廣告",
+    original: "Liquid Death - Hey Kids, Murder Your Thirst",
+    author: "Liquid Death",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=jYkKBXqqunE",
+    motion: "品牌官方廣告片，語氣誇張，產品是鋁罐水。",
+    authorPrompt: null,
+    draft: "把日常喝水拍成過分認真的廣告。罐子始終清楚，口號只留一句，結尾是罐身正面。"
+  },
+  {
+    id: "ld-spec",
+    industry: "food",
+    title: "Liquid Death 自製規格廣告",
+    original: "Liquid Death - MURDER YOUR THIRST | Blender 3.0 Spec Ad",
+    author: "JOVAUGHN",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=jHEBhGMkm18",
+    motion: "Blender 自製規格廣告，不是品牌官方片。",
+    authorPrompt: null,
+    draft: "黑色背景，鋁罐旋轉，水花打在罐身。標題用粗字，節奏快，標明這是練習規格不是正式廣告。"
+  },
+  {
+    id: "apple-burst",
+    industry: "food",
+    title: "蘋果汽水罐",
+    original: "Apple Burst Soda Can 3D Animation",
+    author: "LAKSHANC",
+    platform: "YouTube",
+    url: "https://www.youtube.com/watch?v=W00YSH0ULsU",
+    motion: "熱帶沙灘情境的汽水罐 CGI。",
+    authorPrompt: null,
+    draft: "沙灘光，綠色汽水罐，蘋果切片與氣泡同時進鏡。罐身先轉正面再噴一點液體。十五秒內結束。"
+  },
+  {
+    id: "sodastream",
+    industry: "food",
+    title: "SodaStream Duo 產品演示",
+    original: "SodaStream Duo 3D product demo",
+    author: "BlackBoard Studios",
+    platform: "工作室網站",
+    url: "https://www.blackboardvfx.com/home/product-demo-sodastream-duo",
+    motion: "以 3D 為主，加兩段高速實拍，示範氣瓶快接。",
+    authorPrompt: null,
+    draft: "機器側面打開，氣瓶卡進去，氣泡在杯中升起。功能要看懂，少用裝飾性鏡頭。"
+  },
+  {
+    id: "unica",
+    industry: "food",
+    title: "Gandour 巧克力威化",
+    original: "Chocolate Wafer Animation / Unica Max",
+    author: "XO3D（客戶 Gandour）",
+    platform: "工作室案例",
+    url: "https://xo3d.co.uk/case-studies/gandour-chocolate-wafer-animation/",
+    motion: "層次、融化巧克力與威化掰斷，另有十秒短版。",
+    authorPrompt: null,
+    draft: "威化棒從中間掰開，露出層次，巧克力沿著斷面流下。最後三個口味包裝並排。可剪成六秒。"
+  },
+  {
+    id: "yamama",
+    industry: "food",
+    title: "Yamama 抹醬漩渦",
+    original: "Yamama Spread Animation",
+    author: "XO3D（客戶 Gandour）",
+    platform: "工作室案例",
+    url: "https://xo3d.co.uk/case-studies/gandour-yamama-spread-animation/",
+    motion: "三種口味漩渦、撕箔、開關蓋，以及向日葵繞罐。",
+    authorPrompt: null,
+    draft: "罐蓋打開，抹醬轉出一個漩渦。撕開封膜的瞬間給特寫。若要成分故事，讓一朵向日葵在罐旁展開。"
+  },
+  {
+    id: "blazo",
+    industry: "food",
+    title: "Blazo Gold 威化",
+    original: "Blazo Gold",
+    author: "Squirrel（客戶 Egypt Foods）",
+    platform: "工作室網站",
+    url: "https://squirrel-studio.com/work/blazo-gold/",
+    motion: "包裝與產品動態，加上巧克力層次。",
+    authorPrompt: null,
+    draft: "金色包裝先入鏡，威化斷面轉到鏡頭前，巧克力層慢慢分開。光要像食物廣告，不要金屬感太重。"
+  },
+  {
+    id: "alpina",
+    industry: "food",
+    title: "Alpina × Juan Valdez 優格",
+    original: "Alpina × Juan Valdez Product Launch",
+    author: "Madness／Enrique Wilches、Andrés Marantá",
+    platform: "工作室網站",
+    url: "https://www.madnss.com/alpina-juan-valdez",
+    motion: "咖啡豆、液體、包裝與濺起，服務新品上市。",
+    authorPrompt: null,
+    draft: "咖啡豆落下，優格液面濺起，包裝在旁邊保持清楚。畫面要能聞到新鮮，但不要堆太多食材。"
+  },
+  {
+    id: "kraft",
+    industry: "food",
+    title: "Kraft 零食實驗室",
+    original: "Kraft Snack Bites",
+    author: "Tendril（客戶 Kraft，代理商 Taxi Canada）",
+    platform: "工作室網站",
+    url: "https://tendril.ca/work/kraft-snack-bites/",
+    motion: "五段看起來像實驗室測試的寫實 CG，食物用攝影測量。",
+    authorPrompt: null,
+    draft: "小零食放上一個看起來能動的測試機。花生醬、果乾或穀物各自有一個小測試。語氣輕，但食物要像真的。"
+  },
+  {
+    id: "tenaya",
+    industry: "bags",
+    title: "Sierra Designs Tenaya 45L",
+    original: "TENAYA PACK 45L",
+    author: "VEIG（客戶 Sierra Designs）",
+    platform: "工作室網站",
+    url: "https://veig.com/sierra-tenaya-pack",
+    motion: "掃描主體做成約三十秒社群片，近看結構與材質，CG 加動態。",
+    authorPrompt: null,
+    draft: "背包從背板到肩帶逐段靠近。拉鍊與織物要有重量。最後背在身上走兩步，適合直式。"
+  },
+  {
+    id: "tourister",
+    industry: "bags",
+    title: "American Tourister 亞洲",
+    original: "American Tourister Asia 2024",
+    author: "Finding Pictures",
+    platform: "工作室網站",
+    url: "https://www.finding.pictures/work/american-tourister",
+    motion: "旅行背包與行李箱的 3D 定格感，拉鍊與蓋子開合。",
+    authorPrompt: null,
+    draft: "背包與行李箱像定格一樣一格格打開。拉鍊齒清楚。場景保持旅行，但產品始終是主角。"
+  },
+  {
+    id: "away",
+    industry: "bags",
+    title: "AWAY 重新設計",
+    original: "AWAY | Redesigned",
+    author: "Dada Projects",
+    platform: "Vimeo",
+    url: "https://vimeo.com/914792165",
+    motion: "全 CGI 攝影棚，旅行包與行李箱走一條虛擬伸展台。",
+    authorPrompt: null,
+    draft: "乾淨棚裡，行李箱與旅行包依次轉到正面，背景只有一點旅行地景的影子。不要真人。"
+  },
+  {
+    id: "tombihn",
+    industry: "bags",
+    title: "TOM BIHN Tri-Star",
+    original: "Tri-Star travel bag by TOM BIHN",
+    author: "TOM BIHN",
+    platform: "Vimeo",
+    url: "https://vimeo.com/74153011",
+    motion: "品牌自己的旅行袋產品片。頁面說明很短，不是背包專題。",
+    authorPrompt: null,
+    draft: "旅行袋放在桌面，打開隔層，手把一件物品放進去再拉上。節奏慢，讓口袋結構看懂。"
+  },
+  {
+    id: "rains",
+    industry: "bags",
+    title: "RAINS 旅行系列",
+    original: "RAINS SS24 travel",
+    author: "ZÜNC Studio",
+    platform: "工作室網站",
+    url: "https://www.zunc.studio/archive/rains-travel",
+    motion: "Texel 拉桿箱被一塊塊組起來，四個產品的動態給社群與官網。偏行李箱。",
+    authorPrompt: null,
+    draft: "箱子從零件組到完成。每完成一個部件停一下。防水布料用側光。可剪成四段產品循環。"
+  },
+  {
+    id: "clubglove",
+    industry: "bags",
+    title: "Club Glove 高爾夫旅行袋",
+    original: "Club Glove product videos",
+    author: "Motiv Studios",
+    platform: "工作室網站",
+    url: "https://motivstudios.co/projects/projects-case-studies-clubglobe-product-videos",
+    motion: "棚內實拍產品片，搖臂與穩定器，不是純動畫。",
+    authorPrompt: null,
+    draft: "高爾夫旅行袋在棚內轉一圈，拉鍊打開看到球桿位。燈光乾淨，像產品目錄影片。"
+  },
+  {
+    id: "millican",
+    industry: "bags",
+    title: "Millican 從瓶子到背包",
+    original: "Behind the Seams",
+    author: "Found Studio（客戶 Millican）",
+    platform: "工作室網站",
+    url: "https://www.found-studio.com/work/millican/",
+    motion: "全 CG：回收塑膠瓶變成背包布料，講製程而不是只轉產品。",
+    authorPrompt: null,
+    draft: "塑膠瓶碎開、融成纖維、織成布，最後收成一只背包。每一步都要認得材質。結尾才給產品正面。"
+  },
+  {
+    id: "rollink",
+    industry: "bags",
+    title: "Rollink 可折疊登機箱",
+    original: "Flex 360° Collapsible Suitcase",
+    author: "XO3D（客戶 Rollink）",
+    platform: "工作室案例",
+    url: "https://xo3d.co.uk/case-studies/rollink-flex-360/",
+    motion: "布料中段折疊、教學步驟與上市影片。是行李箱，不是後背包。",
+    authorPrompt: null,
+    draft: "箱子從薄到展開，布料中段真的塌下去再撐起。接著三個步驟：打開、裝入、折回。功能優先。"
+  },
+  {
+    id: "coussin",
+    industry: "bags",
+    title: "Louis Vuitton Coussin",
+    original: "Coussin bag",
+    author: "Stylo Creative",
+    platform: "STASH",
+    url: "https://www.stashmedia.tv/stylo-creative-slips-onto-the-stash-radar-with-film-for-louis-vuittons-coussin-bag/",
+    motion: "皮、織帶與金屬鍊一起模擬，實驗性奢侈包影片。不是背包。",
+    authorPrompt: null,
+    draft: "包放在暗色空間，鍊條與織帶同時有重量。皮革擠壓後回彈。鏡頭慢，只看材質。"
+  }
+];
+
+const grid = document.getElementById("grid");
+const count = document.getElementById("count");
+const empty = document.getElementById("empty");
+const q = document.getElementById("q");
+const dialog = document.getElementById("detail");
+const detailBody = document.getElementById("detail-body");
+let filter = "all";
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function visible() {
+  const query = q.value.trim().toLowerCase();
+  return ITEMS.filter(item => {
+    if (filter !== "all" && item.industry !== filter) return false;
+    if (!query) return true;
+    const blob = [item.title, item.original, item.author, item.motion, item.platform, INDUSTRY[item.industry], item.draft].join(" ").toLowerCase();
+    return blob.includes(query);
+  });
+}
+
+function render() {
+  const list = visible();
+  count.textContent = list.length + " 筆參考";
+  empty.hidden = list.length !== 0;
+  grid.innerHTML = list.map(item => `
+    <button class="card" type="button" data-id="${item.id}">
+      <div class="poster ${item.industry}">
+        <span class="ind">${INDUSTRY[item.industry]}</span>
+        <span class="mark">${esc(item.platform)}</span>
+      </div>
+      <div class="body">
+        <h2>${esc(item.title)}</h2>
+        <div class="meta">${esc(item.author)}</div>
+        <div class="motion">${esc(item.motion)}</div>
+      </div>
+    </button>
+  `).join("");
+}
+
+function openItem(id) {
+  const item = ITEMS.find(x => x.id === id);
+  if (!item) return;
+  const promptBlock = item.authorPrompt
+    ? `<div class="block"><h4>作者在頁面公開的句子</h4><p>${esc(item.authorPrompt)}</p><p class="meta">${esc(item.authorPromptNote || "")}</p></div>`
+    : `<div class="block"><h4>作者提示詞</h4><p>原貼未公開提示詞</p></div>`;
+  detailBody.innerHTML = `
+    <h3>${esc(item.title)}</h3>
+    <p class="en">${esc(item.original)}</p>
+    <dl>
+      <dt>產業</dt><dd>${INDUSTRY[item.industry]}</dd>
+      <dt>作者</dt><dd>${esc(item.author)}</dd>
+      <dt>平台</dt><dd>${esc(item.platform)}</dd>
+      <dt>動作</dt><dd>${esc(item.motion)}</dd>
+    </dl>
+    ${promptBlock}
+    <div class="block">
+      <span class="label">我們整理的草稿</span>
+      <h4>可改寫的拍攝提示詞草稿</h4>
+      <p>${esc(item.draft)}</p>
+    </div>
+    <a class="source" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">打開原始來源</a>
+  `;
+  if (!dialog.open) dialog.showModal();
+}
+
+grid.addEventListener("click", e => {
+  const card = e.target.closest("button.card");
+  if (card) openItem(card.dataset.id);
+});
+document.querySelectorAll("button.chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    filter = btn.dataset.filter;
+    document.querySelectorAll("button.chip").forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+    render();
+  });
+});
+q.addEventListener("input", render);
+document.getElementById("close").addEventListener("click", () => dialog.close());
+dialog.addEventListener("click", e => { if (e.target === dialog) dialog.close(); });
+render();
+</script>
+</body>
+</html>
