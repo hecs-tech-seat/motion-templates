@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>產業 Motion 樣板庫</title>
-<meta name="description" content="保養品、保健食品、食品與背包的公開動態影像參考目錄。連結原作者，不轉存影片。">
+<title>可操作的產業 Motion 樣板</title>
+<meta name="description" content="保養品、保健食品、食品與背包可打開編輯的動態樣板目錄。每筆都有範例來源，以及作者步驟或我們整理的操作草稿。不轉存他人檔案。">
 <style>
   :root {
     --paper: #efe6d6;
@@ -14,9 +14,6 @@
     --line: #d4c8b4;
     --oxide: #8d3b2b;
     --oxide-deep: #6d2c20;
-    --sage: #3f5344;
-    --amber: #8a5a22;
-    --stone: #3d4650;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -28,106 +25,42 @@
   }
   a { color: var(--oxide-deep); }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 64px; }
-  header.site {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 22px;
-    margin-bottom: 22px;
-  }
-  .kicker {
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: var(--oxide);
-    margin: 0 0 8px;
-  }
+  header.site { border-bottom: 1px solid var(--ink); padding-bottom: 22px; margin-bottom: 22px; }
+  .kicker { letter-spacing: 0.18em; text-transform: uppercase; font-size: 12px; color: var(--oxide); margin: 0 0 8px; }
   h1 {
-    font-family: "Songti TC", "Noto Serif CJK TC", "PMingLiU", Palatino, "Iowan Old Style", serif;
-    font-weight: 500;
-    font-size: clamp(34px, 6vw, 58px);
-    line-height: 1.05;
-    margin: 0;
-    letter-spacing: -0.02em;
+    font-family: "Songti TC", "Noto Serif CJK TC", "PMingLiU", Palatino, serif;
+    font-weight: 500; font-size: clamp(34px, 6vw, 56px); line-height: 1.05; margin: 0; letter-spacing: -0.02em;
   }
-  .lede { max-width: 62ch; color: var(--muted); margin: 10px 0 0; font-size: 16px; }
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin: 18px 0 8px;
-  }
+  .lede { max-width: 68ch; color: var(--muted); margin: 10px 0 0; font-size: 16px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 18px 0 8px; }
   .filters { display: flex; flex-wrap: wrap; gap: 8px; }
-  button.chip, button.card, button.close {
-    font: inherit;
-    cursor: pointer;
-  }
+  button.chip, button.close { font: inherit; cursor: pointer; }
   button.chip {
-    border: 1px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    border-radius: 999px;
-    padding: 8px 14px;
-    min-height: 40px;
+    border: 1px solid var(--ink); background: transparent; color: var(--ink);
+    border-radius: 999px; padding: 8px 14px; min-height: 40px;
   }
-  button.chip[aria-pressed="true"] {
-    background: var(--ink);
-    color: var(--paper);
-  }
+  button.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
   input[type="search"] {
-    flex: 1 1 220px;
-    min-height: 44px;
-    border: 1px solid var(--ink);
-    background: var(--sheet);
-    color: var(--ink);
-    padding: 8px 12px;
-    font: inherit;
-    border-radius: 0;
+    flex: 1 1 220px; min-height: 44px; border: 1px solid var(--ink);
+    background: var(--sheet); color: var(--ink); padding: 8px 12px; font: inherit;
   }
   .count { color: var(--muted); font-size: 14px; margin: 8px 0 16px; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  article.card {
+    border: 1px solid var(--line); background: var(--sheet);
+    display: flex; flex-direction: column; min-height: 100%;
   }
-  button.card {
-    text-align: left;
-    border: 1px solid var(--line);
-    background: var(--sheet);
-    color: inherit;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+  button.open {
+    font: inherit; cursor: pointer; text-align: left; border: 0; background: transparent;
+    color: inherit; padding: 0; display: flex; flex-direction: column; flex: 1;
   }
-  button.card:focus-visible, button.chip:focus-visible, a:focus-visible, button.close:focus-visible {
-    outline: 2px solid var(--oxide);
-    outline-offset: 2px;
+  button.open:focus-visible, button.chip:focus-visible, a:focus-visible, button.close:focus-visible {
+    outline: 2px solid var(--oxide); outline-offset: 2px;
   }
-  .poster {
-    height: 148px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: #f6f1e8;
-    position: relative;
-    overflow: hidden;
-  }
-  .poster::before, .poster::after {
-    content: "";
-    position: absolute;
-    border: 1px solid rgba(246,241,232,0.35);
-  }
-  .poster::before { width: 72px; height: 72px; right: -18px; top: -22px; border-radius: 50%; }
-  .poster::after { width: 90px; height: 18px; left: -10px; bottom: 22px; transform: rotate(-8deg); }
-  .poster .ind { font-size: 12px; letter-spacing: 0.12em; }
-  .poster .mark {
-    font-family: Palatino, "Songti TC", serif;
-    font-size: 28px;
-    line-height: 1;
+  .poster { height: 148px; position: relative; overflow: hidden; background: #3d4650; }
+  .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .poster .fallback {
+    height: 100%; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; color: #f6f1e8;
   }
   .skincare { background: #8d3b2b; }
   .supplements { background: #3f5344; }
@@ -136,71 +69,37 @@
   .body { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .body h2 {
     font-family: "Songti TC", "Noto Serif CJK TC", Palatino, serif;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.25;
-    margin: 0;
+    font-size: 20px; font-weight: 500; line-height: 1.25; margin: 0;
   }
   .meta { color: var(--muted); font-size: 13px; }
-  .motion { font-size: 14px; margin-top: auto; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge { font-size: 12px; border: 1px solid var(--ink); padding: 2px 6px; }
+  .badge.warn { border-color: var(--oxide); color: var(--oxide-deep); }
+  .snippet { font-size: 14px; margin: 0; }
+  .card-links { display: flex; gap: 8px; padding: 0 14px 14px; }
+  a.example, a.source {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px;
+    text-decoration: none; border: 1px solid var(--ink);
+  }
+  a.source { background: var(--ink); color: var(--paper); }
   dialog {
-    width: min(720px, calc(100vw - 24px));
-    border: 1px solid var(--ink);
-    background: var(--sheet);
-    color: var(--ink);
-    padding: 0;
-    margin: auto;
+    width: min(760px, calc(100vw - 24px)); border: 1px solid var(--ink);
+    background: var(--sheet); color: var(--ink); padding: 0; margin: auto;
   }
   dialog::backdrop { background: rgba(28,23,18,0.45); }
   .dialog-inner { padding: 22px 22px 26px; }
   .dialog-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-  button.close {
-    border: 1px solid var(--ink);
-    background: transparent;
-    min-width: 44px;
-    min-height: 44px;
-  }
-  .detail h3 {
-    font-family: "Songti TC", Palatino, serif;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 1.2;
-    margin: 0 0 6px;
-  }
+  button.close { border: 1px solid var(--ink); background: transparent; min-width: 44px; min-height: 44px; }
+  .detail h3 { font-family: "Songti TC", Palatino, serif; font-weight: 500; font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
   .en { color: var(--muted); margin: 0 0 14px; }
   dl { display: grid; grid-template-columns: 7em 1fr; gap: 8px 12px; margin: 0 0 16px; }
   dt { color: var(--muted); }
   dd { margin: 0; }
-  .block {
-    border-top: 1px solid var(--line);
-    padding-top: 12px;
-    margin-top: 12px;
-  }
+  .block { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 12px; }
   .block h4 { margin: 0 0 6px; font-size: 15px; }
-  .label {
-    display: inline-block;
-    border: 1px solid var(--oxide);
-    color: var(--oxide-deep);
-    font-size: 12px;
-    padding: 2px 6px;
-    margin-bottom: 6px;
-  }
-  .source {
-    display: inline-block;
-    margin-top: 8px;
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-    padding: 10px 14px;
-    min-height: 44px;
-  }
-  footer {
-    margin-top: 36px;
-    border-top: 1px solid var(--ink);
-    padding-top: 16px;
-    color: var(--muted);
-    font-size: 13px;
-  }
+  .label { display: inline-block; border: 1px solid var(--oxide); color: var(--oxide-deep); font-size: 12px; padding: 2px 6px; margin-bottom: 6px; }
+  .shot { width: 100%; max-height: 280px; object-fit: cover; border: 1px solid var(--line); margin-top: 8px; }
+  footer { margin-top: 36px; border-top: 1px solid var(--ink); padding-top: 16px; color: var(--muted); font-size: 13px; }
   .empty { padding: 24px 0; color: var(--muted); }
   @media (max-width: 640px) {
     dl { grid-template-columns: 1fr; gap: 2px; }
@@ -211,11 +110,9 @@
 <body>
 <div class="wrap">
   <header class="site">
-    <div>
-      <p class="kicker">Reference index · 不轉存影片</p>
-      <h1>產業 Motion 樣板庫</h1>
-      <p class="lede">給保養品、保健食品、食品與背包案子用的公開動態參考。每張卡片連到原作者頁面。動作筆記是我們看過頁面後寫的一句話；提示詞只有原貼寫出來才收錄，其餘標為原貼未公開提示詞。</p>
-    </div>
+    <p class="kicker">Operable templates · 只連到原頁</p>
+    <h1>可操作的產業 Motion 樣板</h1>
+    <p class="lede">上一版多半是看完就結束的 CGI 產品片，不能打開改。這一版只收能操作的東西：After Effects 專案、Premiere mogrt、CapCut 樣板、Rive 檔，或寫清楚怎麼改的動態系統。每張卡都有範例來源，以及提示詞或操作步驟。作者自己寫的步驟會標出來；其餘是我們整理的草稿，不是原作者的提示詞。</p>
   </header>
   <div class="toolbar">
     <div class="filters" role="group" aria-label="產業篩選">
@@ -225,14 +122,14 @@
       <button class="chip" type="button" data-filter="food" aria-pressed="false">食品</button>
       <button class="chip" type="button" data-filter="bags" aria-pressed="false">背包</button>
     </div>
-    <input id="q" type="search" placeholder="搜尋品牌、作者、動作" aria-label="關鍵字搜尋">
+    <input id="q" type="search" placeholder="搜尋樣板、作者、工具" aria-label="關鍵字搜尋">
   </div>
   <p class="count" id="count"></p>
   <div class="grid" id="grid"></div>
-  <p class="empty" id="empty" hidden>沒有符合的參考。</p>
+  <p class="empty" id="empty" hidden>沒有符合的樣板。</p>
   <footer>
-    <p>本站條目是參考目錄，連結到原作者與原平台，不是我們的資產。我們不下載、不轉存他人影片或畫面。海報色塊是本站自製的分類框，不是原作截圖。</p>
-    <p>整理給 Wolfgang Huang 的客戶產業：保養品、保健食品、食品、背包。公開頁，可供檢索。</p>
+    <p>本站不下載、不轉存他人的影片、專案或字型。預覽圖直接連到原平台的封面，沒有封面的卡片只用色塊。授權、外掛與可否商用，以原頁為準。Mixkit 寫明免費下載；Envato 項目多半要訂閱；CapCut 在 App 裡套用。</p>
+    <p>保健食品與背包的可編輯專題比較少。標成「相近」的項目不是該產業原題，只是能改色、換圖後拿來用。上一版的 CGI 品牌片已全部拿掉。</p>
   </footer>
 </div>
 <dialog id="detail">
@@ -243,497 +140,10 @@
     </div>
   </div>
 </dialog>
+<script id="catalog" type="application/json">[{"id": "skin-stories", "industry": "skincare", "fit": "direct", "title": "保養品限動五版", "original": "Skincare Promo Instagram Stories", "author": "yeremia", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/skincare-promo-instagram-stories-HRABSES", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/454145488/Preview_Image_Skincare_Promo_Instagram_Stories.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=e77566cef7ba8d8c6c9916368a929ff7b16c73c7c15660f1dc29bd30c118851e", "specs": "1080p．預覽長度 16 秒．五支各 15 秒．不需外掛．AE CC", "authorKind": "steps", "authorText": "頁面寫：這是可拿來推廣保養或美妝的 After Effects 專案，內含 5 支樣板，每支 15 秒。附教學影片，示範改文字與替換 placeholder。照片只供預覽、不在下載檔裡。不需外掛。預覽音樂不含在檔案中，頁面另給一條 AudioJungle 連結。", "draft": "打開 .aep，照教學把產品圖換進 placeholder，再改標題。五支各自維持約 15 秒，輸出直式。預覽用的照片和音樂不要當成可商用素材。"}, {"id": "skin-slideshow", "industry": "skincare", "fit": "direct", "title": "保養簡報十九場景", "original": "Skin Care Slideshow | After Effects", "author": "Graphiqa", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/skin-care-slideshow-after-effects-UZA5QKC", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/382182923/Preview-Image---Skin-Care-Slideshow-(AE).jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=496514205aeeedb681bead1d0ce398bf9683a75400cb793947897e7a27db4526", "specs": "4K．預覽長度 91 秒．19 個場景．不需外掛．AE CS6、CC 以上", "authorKind": "steps", "authorText": "頁面功能表：19 個現成場景、4K、色彩控制、任何 AE 語言可用、不需外掛、向量圖層。檔案含 .aep、教學 MP4、說明 PDF、字型與圖片連結 TXT。預覽音樂不在主檔，PDF 裡有出處。", "draft": "先看說明 PDF 對字型。用色彩控制改成品牌色，19 個場景只留要用的。圖片依 TXT 自己換，不要沿用預覽圖。"}, {"id": "skin-intro", "industry": "skincare", "fit": "direct", "title": "保養開場四版", "original": "Promotional Intro - Skincare Promo After Effects Project Files", "author": "slidekingdom", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/promotional-intro-skincare-promo-after-effects-pro-CUG9XBC", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/506398080/Preview%20Image.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=131b63a31497e4df233588f92fda92e2020addd8b71d96aeb0d59b98d2822dcb", "specs": "1920×1080．預覽長度 20 秒．4 個圖形樣板．不需外掛．AE CC 2021 以上", "authorKind": "steps", "authorText": "頁面寫：4 個圖形樣板、1920×1080、可用圖片或影片、附教學影片、專案有整理、不需外掛、After Effects CC 2021 以上。", "draft": "橫式 1080p。把保養品實拍或靜照放進媒體層，改標題。四版挑一版，依教學輸出。"}, {"id": "skin-builder", "industry": "skincare", "fit": "direct", "title": "彩妝保養一百零三瓶型", "original": "Cosmetics Promo Builder v2 for After Effects – 103 Photorealistic 3D Mockups", "author": "Pixamins", "platform": "Envato Elements", "tool": "After Effects 專案（需 Element 3D）", "url": "https://elements.envato.com/cosmetics-promo-builder-v2-for-after-effects-103-p-JHVHKVE", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/330867376/Cosmetics_Promo_Builder_Preview_v2.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=1fa3ebf4cfe99fc9395039390440470e8dab93afbcb0c323a83ac81de4d66254", "specs": "1080p．預覽長度 73 秒．需 Element 3D．AE CS6 與 CC", "authorKind": "steps", "authorText": "頁面寫：103 個寫實瓶型，12 類，含洗髮精、軟管、罐、滴管、噴霧、香水、滾珠、唇膏等。用 Premium Builder 預覽並匯入。含有聲教學。可改顏色、字型、版面、關鍵幀與鏡頭。必須有 Element 3D。", "draft": "先確認 Element 3D 已安裝。在 Builder 選滴管或罐，換上自己的標籤，改背景與瓶蓋色，再選一支動畫。這是可改的專案，不是成品影片。"}, {"id": "skin-vertical", "industry": "skincare", "fit": "direct", "title": "直式保養廣告", "original": "Vertical Skin Care Promo", "author": "faisaltarunajaya", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/vertical-skin-care-promo-S6KUD8H", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/656807629/Preview.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=ffbc5a356e530baae957fcb32940da847b8ad79fac413c15e0961008e4e17ec0", "specs": "1080p．長度 16 秒．不需外掛．AE CC．分類 Product Promo。公開 API 的說明欄是空的", "authorKind": null, "authorText": null, "draft": "頁面長說明在公開 API 是空的，所以只依核對過的規格：用 After Effects 打開，不需外掛，輸出 1080p、約 16 秒的直式保養廣告。文字層與顏色以下載後專案為準，這裡不臆測層名。"}, {"id": "skin-serum-ae", "industry": "skincare", "fit": "direct", "title": "精華液瓶 Mockup", "original": "Beauty Product Serum Mock Up", "author": "Pixwit", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/beauty-product-serum-mock-up-228LND3", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/505448081/ImagePreviewPX-01.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=f701d8d4ff366121e243326b7ebd0ff4ea82ef57477eac542980a8dd884ed989", "specs": "4K．長度 21 秒．不需外掛．AE CC．分類 Product Promo。公開 API 的說明欄是空的", "authorKind": null, "authorText": null, "draft": "規格已核對：4K、約 21 秒、不需外掛的精華瓶產品樣板。換上自己的瓶標後輸出。頁面沒有公開層級清單，不要假設有幾個文字層。"}, {"id": "capcut-serum", "industry": "skincare", "fit": "direct", "title": "精華液產品展示", "original": "Skin Care Face Serum Product Display", "author": "Creative Video", "platform": "CapCut", "tool": "CapCut 樣板（在 App 內改）", "url": "https://www.capcut.com/templates/7245592618514566406", "preview": null, "specs": "封面 1080×1920．頁面標 Available for commercial use．產業 beauty and personal care．主題 product display．標籤 style-simple、style-flat。沒有公開片段數", "authorKind": null, "authorText": null, "draft": "在 CapCut 打開這支樣板，換成自己的精華瓶畫面，改標題。比例維持直式 1080×1920。頁面沒有作者提示詞，也沒有寫要幾段素材。"}, {"id": "capcut-skin-promo", "industry": "skincare", "fit": "direct", "title": "保養推廣直式", "original": "Skincare | Promotion", "author": "Meno Me", "platform": "CapCut", "tool": "CapCut 樣板（在 App 內改）", "url": "https://www.capcut.com/template-detail/Skincare-Promotion/7638078577065364743", "preview": null, "specs": "頁面標籤：7、00:17、約 51.53K uses、比例 9:16。7 對應頁面上的片段數", "authorKind": null, "authorText": null, "draft": "準備 7 段直式畫面（瓶子、質地、使用）。在 CapCut 套用後改字幕。頁面顯示長度 00:17、比例 9:16。沒有作者寫的提示詞。"}, {"id": "supp-jarbox", "industry": "supplements", "fit": "direct", "title": "保健罐與外盒", "original": "Medicine Pharma Supplement Jar and Box Mockup", "author": "Artemii_Pogodin", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/medicine-pharma-supplement-jar-and-box-mockup-M89E56X", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/503182930/Preview_Image.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=d038cb81a5c2a13c8bfb68a7dcaeea9dd1596a3094ac5b8e94503ed9b6ee5299", "specs": "1080p．8 秒．不需外掛．AE CC", "authorKind": "blurb", "authorText": "頁面原文：High quality animated mockup for your product presentation or advertising. Thanks to its high dynamics, it captures the viewer's attention from the first seconds. Suitable for medical supplements and includes dynamic softgels.", "draft": "這句是產品介紹，不是操作清單。可做的事依規格：AE 打開、不需外掛、約 8 秒、1080p，換成自己的罐標與盒面。頁面寫畫面含會動的軟膠囊。"}, {"id": "supp-jarvideo", "industry": "supplements", "fit": "direct", "title": "保健罐影片 Mockup", "original": "Supplement Jar Video Mockup", "author": "ThunderMotion", "platform": "Envato Elements", "tool": "After Effects 專案（需 WUNK PixMap）", "url": "https://elements.envato.com/supplement-jar-video-mockup-6XYBG2V", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/517893325/Preview%20Image.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=c752e7a85cde29de3ecd5dd8aaf226c5e471411e229048f9322cecf05dd6a75e", "specs": "2K．10 秒．外掛 WUNK PixMap．AE CC。公開 API 的說明欄是空的", "authorKind": null, "authorText": null, "draft": "先安裝頁面列出的 WUNK PixMap，再用 AE 打開。約 10 秒、2K。說明欄是空的，所以不假設瓶蓋或燈光能不能改，以專案裡實際的控制項為準。"}, {"id": "supp-shaker", "industry": "supplements", "fit": "closest", "title": "搖搖杯維他命粉", "original": "Realistic Shaker Bottle 3D Mockups for After Effects – 10 Editable Element 3D Models", "author": "Pixamins", "platform": "Envato Elements", "tool": "After Effects 專案（需 Element 3D）", "url": "https://elements.envato.com/realistic-shaker-bottle-3d-mockups-for-after-effec-K36QS9K", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/448642187/Shaker_Preview_Image.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=d6bb9ba0ab12787269569fe2d12e878cd65b8a716625bc77615045bcf8129a17", "specs": "1080p．30 秒．需 Video Copilot Element 3D．10 個搖搖杯．AE CS6 與 CC", "fitNote": "頁面寫給水、維他命、蛋白粉、訓練前後飲品。不是藥罐專題，可改貼圖後當粉狀保健食品。", "authorKind": "steps", "authorText": "頁面步驟：選一個 mockup、放上設計、加背景、選動畫預設，並可改關鍵幀、顏色、樣式與鏡頭。內含 10 個 OBJ 搖搖杯、FFX 動畫預設、有聲教學。必須有 Element 3D。沒有預先渲染。", "draft": "裝好 Element 3D。選維他命或蛋白粉那支杯子，貼上標籤，背景改成乾淨桌面，再挑一支預設動畫。不要拿去假裝是滴管精華。"}, {"id": "supp-medbox", "industry": "supplements", "fit": "closest", "title": "藥盒與藥瓶", "original": "3D Medicine Box And Bottle", "author": "v68", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/3d-medicine-box-and-bottle-VADEPWF", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/266721117/3D%20Box%20Of%20Pills%20Preview1.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=2ed3ba6f780919f845c5163b0cb8283bb2ef7ceac15b3dcb78fcd9e06d50934b", "specs": "4K．30 秒．不需外掛。說明欄是空的。AE 版本列表從 CS4 到 CC 2019", "fitNote": "藥品盒與瓶，不是保健食品專題。可改貼圖後當罐裝保健，但版面是藥品。", "authorKind": null, "authorText": null, "draft": "只依核對過的規格：4K、約 30 秒、不需外掛。換盒面與瓶標。頁面沒有公開分鏡，不要自己加成分飛入的動畫。"}, {"id": "supp-card", "industry": "supplements", "fit": "closest", "title": "產品卡片可改色", "original": "Product Promo Card", "author": "Mixkit", "platform": "Mixkit", "tool": "免費 After Effects 專案", "url": "https://mixkit.co/free-after-effects-templates/product-promo-card-773/", "preview": "https://assets.mixkit.co/video-templates/773/thumbnails/preview-0005.jpg", "specs": "Mixkit 免費 AE 專案。全站說明：需較新的 After Effects，字型在 Adobe Fonts", "fitNote": "通用產品卡，不是保健食品。placeholder 放罐子，主色改成品牌色。", "authorKind": "blurb", "authorText": "頁面一句：A bright product promo card with a video or image placeholder, bold headline text and animated background.", "draft": "下載專案。粗體標題改產品名，placeholder 放罐身照片或影片，動畫背景改成品牌色。這句是版面說明，不是作者提示詞。"}, {"id": "supp-wknd", "industry": "supplements", "fit": "closest", "title": "WKND 產品展示", "original": "WKND Product Showcase sample MOGRT", "author": "AEAbreu-hub", "platform": "GitHub", "tool": "Premiere .mogrt", "url": "https://github.com/AEAbreu-hub/ffs-mogrt-package", "preview": null, "specs": "公開倉庫。Beginner 與 Advanced 兩支 mogrt，另有 JSON、CSV、說明 PDF。Release v1.0.0 有 zip", "fitNote": "Adobe 的通用產品展示範例，不是保健食品。用 CSV 換品名與產品圖後可改色。", "authorKind": "steps", "authorText": "README 寫：Beginner mogrt 路徑較單純，Advanced 版面較多。各配對應的 Data CSV 與 payload。字型是 Source Sans 3 Bold 與 Source Serif 4 Bold。完整欄位表在 Documentation PDF。不必加入組織就能下載。", "draft": "下載 Release v1.0.0 的 zip。Premiere 匯入 Beginner mogrt，用對應 CSV 填保健品名稱與產品圖。確認跑得動再換 Advanced。不要把範例裡的 WKND 圖直接拿去上架。"}, {"id": "food-cafe", "industry": "food", "fit": "direct", "title": "餐飲開場", "original": "Cafe Food Intro", "author": "Mixkit", "platform": "Mixkit", "tool": "免費 After Effects 專案", "url": "https://mixkit.co/free-after-effects-templates/cafe-food-intro-619/", "preview": "https://assets.mixkit.co/video-templates/619/thumbnails/preview-0003.jpg", "specs": "Mixkit 免費下載．After Effects 專案", "authorKind": "blurb", "authorText": "頁面一句：A modern food promo intro with animated text and social icons.", "draft": "改動畫文字成店名或餐點，換上自己的社群圖示。頁面沒有逐層時間表，以專案裡的文字層為準。"}, {"id": "food-logo", "industry": "food", "fit": "direct", "title": "食物標誌揭幕", "original": "Food Logo Reveal", "author": "Mixkit", "platform": "Mixkit", "tool": "免費 After Effects 專案", "url": "https://mixkit.co/free-after-effects-templates/food-logo-reveal-782/", "preview": "https://assets.mixkit.co/video-templates/782/thumbnails/preview-0005.jpg", "specs": "Mixkit 免費下載．三個影片 placeholder", "authorKind": "blurb", "authorText": "頁面一句：Food and cooking style logo reveal with three video placeholders. Logo entrance and glass overlay.", "draft": "三個影片 placeholder 放料理過程，logo 換成品牌標，保留玻璃疊層。不要改掉頁面寫的這三個位置以外的結構，除非你看得懂專案。"}, {"id": "food-call", "industry": "food", "fit": "direct", "title": "食物標註", "original": "Simple Food Call Out", "author": "Mixkit", "platform": "Mixkit", "tool": "免費 After Effects 專案", "url": "https://mixkit.co/free-after-effects-templates/simple-food-call-out-808/", "preview": "https://assets.mixkit.co/video-templates/808/thumbnails/preview-0003.jpg", "specs": "Mixkit 免費下載．雙行標註", "authorKind": "blurb", "authorText": "頁面一句：Double line call out with a boxed headline, simple tagline and pointer.", "draft": "方框標題寫菜名，第二行寫一句話，指標指向食物。只有這三個文字角色是頁面公開的。"}, {"id": "food-vert", "industry": "food", "fit": "direct", "title": "食物直式故事", "original": "Food Vertical Story", "author": "Mixkit", "platform": "Mixkit", "tool": "免費 After Effects 專案", "url": "https://mixkit.co/free-after-effects-templates/food-vertical-story-809/", "preview": "https://assets.mixkit.co/video-templates/809/thumbnails/preview-0005.jpg", "specs": "Mixkit 免費下載．直式", "authorKind": "blurb", "authorText": "頁面一句：Animated headline, subheading and a video placeholder with an animated shape border.", "draft": "直式。改標題與副標，影片 placeholder 放一道菜，外框維持頁面說的動態形狀。"}, {"id": "food-stories", "industry": "food", "fit": "direct", "title": "速食菜單限動五支", "original": "Fast Food Menu Stories", "author": "Soneiko", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/fast-food-menu-stories-PYTF4TQ", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/765523715/Image.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=b1f886ca1c35b885ed9159f585cf7488a0d84ecfbd082825a9e180516ae8d5c2", "specs": "直式 1080×1920．預覽長度 16 秒．5 支．29.97 fps．不需外掛．AE 2024 以上", "authorKind": "steps", "authorText": "頁面寫：改文字、用控制面板調顏色、放入照片或影片。含免費字型連結與教學影片。示範畫面來自 Unsplash，預覽音樂不含。不需外掛。", "draft": "控制面板改色。五支限動各換菜單照片、菜名與價格。直式 1080×1920。Unsplash 示範圖和預覽音樂不要直接商用。"}, {"id": "food-reels", "industry": "food", "fit": "direct", "title": "漢堡 Reels 五支", "original": "Reels - Burger Promo After Effects Project Files", "author": "Slidehack", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/reels-burger-promo-after-effects-project-files-632JM24", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/651579856/Preview%20Image.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=e574436d0d7d69b969f08105c0d327d8ecfae5dec5cdd8883f3c7a42593d0892", "specs": "1080×1920．預覽長度 31 秒．5 支 Reels．不需外掛．AE CC 2021 以上", "authorKind": "steps", "authorText": "頁面寫：5 支 Instagram Reels、1080×1920、可用圖片與影片、附教學、專案有整理、不需外掛、After Effects CC 2021 以上。", "draft": "依教學把漢堡或餐點的圖片、影片換進去，改價格字。輸出直式 1080×1920。"}, {"id": "food-burger", "industry": "food", "fit": "direct", "title": "漢堡菜單促銷", "original": "Delicious Burger Food Promo", "author": "TranSMaxX", "platform": "Envato Elements", "tool": "After Effects 專案", "url": "https://elements.envato.com/delicious-burger-food-promo-N2E7AVX", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/549333364/Delicious%20Burger%20Food%20Promo%201920x1080.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=b79b008113f0ad3f87ee69bb95db4b98bbddc869a228b8695242ea8b7e50e992", "specs": "1080p．預覽長度 63 秒．不需外掛．AE CC", "authorKind": "blurb", "authorText": "頁面寫這支用來做店內菜單與價格展示，可放漢堡、披薩、壽司等餐點，並提到 Facebook、Instagram、YouTube。沒有逐步操作清單。", "draft": "改菜名、價格和餐點圖，給店內螢幕或社群。約 63 秒、1080p、不需外掛。頁面沒有寫控制面板名稱，下載後再對文字層。"}, {"id": "capcut-food", "industry": "food", "fit": "direct", "title": "食物推廣十段", "original": "Food Promotion", "author": "NV Studio", "platform": "CapCut", "tool": "CapCut 樣板（在 App 內改）", "url": "https://www.capcut.com/template-detail/Food-Promotion/7540931707189366069", "preview": null, "specs": "頁面寫 Requires: 10 clips．比例 9:16．頁面同時寫 11 uses、1 like", "authorKind": null, "authorText": null, "draft": "準備 10 段直式食物畫面再套用，改標題。比例 9:16。頁面沒有提示詞。使用數很少，先看過預覽再決定要不要用。"}, {"id": "capcut-bread", "industry": "food", "fit": "direct", "title": "麵包販售直式", "original": "Bread Sales", "author": "Food", "platform": "CapCut", "tool": "CapCut 樣板（在 App 內改）", "url": "https://www.capcut.com/template-detail/Bread-Sales/7473043345900670269", "preview": null, "specs": "頁面標籤：8、00:16、約 16.83K uses、比例 9:16", "authorKind": null, "authorText": null, "draft": "8 段素材、頁面顯示 00:16、比例 9:16。換成麵包或烘焙產品與價格字。沒有作者提示詞。"}, {"id": "rive-burger", "industry": "food", "fit": "direct", "title": "漢堡分層點擊", "original": "Burger Layers", "author": "vitaliys", "platform": "Rive", "tool": "Rive 檔（可嵌網頁）", "url": "https://rive.app/marketplace/22436-42005-burger-layers/", "preview": null, "specs": "Rive Marketplace．頁面日期 30 July 2025．互動檔，不是 AE 專案", "authorKind": "blurb", "authorText": "作者頁：This is an interactive burger animation where all the ingredients pop out on click, revealing each delicious layer. 可嵌網站、點餐 App 或電子菜單。", "draft": "在 Rive 打開。維持點一下就彈出一層配料。若要換成自己的食材，改對應的 2D 圖層。這不是影片樣板，沒有時間軸提示詞。"}, {"id": "bag-five", "industry": "bags", "fit": "direct", "title": "背包五場景", "original": "Backpack - 5 Scenes Mockup Template - Animated Mockup PRO", "author": "2DeadFrog", "platform": "Envato Elements", "tool": "After Effects 專案（需 ft-UVPass）", "url": "https://elements.envato.com/backpack-5-scenes-mockup-template-animated-mockup--QPBVR93", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/359753487/IMG.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=461d5c6f8d5caa12e7b3545ba62570c55c9d739219fd4219383fe297e193296a", "specs": "Full HD．8 秒．5 場景．含 alpha．AE CC 2017 以上．外掛 ft-UVPass（頁面寫已不免費，用 legacy 版）", "authorKind": "steps", "authorText": "頁面寫：把內容拖進去，用效果選單改細節。五個場景、模組化、含 PDF 教學與 alpha。預覽音樂與 Freepik 向量不在專案裡。ft-UVPass 要另外向 aescripts 買，並用 legacy 版。", "draft": "先裝 ft-UVPass 舊版。五個場景把布料與標誌拖進貼圖，用效果面板改細節。不要把 Artlist 配樂或 Freepik 向量當成專案的一部分。"}, {"id": "bag-premiere", "industry": "bags", "fit": "direct", "title": "背包 Premiere 五場景", "original": "Backpack Mockup Template - Animated Mockup PREMIERE", "author": "2DeadFrog", "platform": "Envato Elements", "tool": "Premiere 樣板（貼圖走 PSD）", "url": "https://elements.envato.com/backpack-mockup-template-animated-mockup-premiere-EBHNPVR", "preview": "https://elements-resized.envatousercontent.com/elements-video-cover-images/files/364777133/IMG.jpg?w=600&h=338&cf_fit=cover&q=85&format=auto&s=5d877fd4ae8ef54dde8c2bf7b5a0697ff8a186a6266ca9122dcb18c4a129c5b1", "specs": "Full HD．8 秒．5 場景．Premiere Essential Graphics．仍需 AE、PSD 軟體與 ft-UVPass。頁面建議 32GB 記憶體", "authorKind": "steps", "authorText": "頁面寫：內容拖進 PSD，再用 Premiere 的 Essential Graphics 面板改細節。需要 Premiere、After Effects（不必會用）、Photoshop 或其他 PSD 軟體，以及 ft-UVPass legacy。預覽配樂不在檔內。", "draft": "貼圖放進 PSD，Premiere 用 Essential Graphics 改顏色與細節。五個場景、約 8 秒、1080p。機器記憶體不夠就先做一場景。"}, {"id": "capcut-handbag", "industry": "bags", "fit": "closest", "title": "手提包產品", "original": "Hand Bag Product", "author": "farawilson", "platform": "CapCut", "tool": "CapCut 樣板（在 App 內改）", "url": "https://www.capcut.com/template-detail/Hand-Bag-Product/7592252749669059856", "preview": null, "specs": "頁面標籤：6、00:14、約 226.69K uses、比例 9:16", "fitNote": "手提包，不是後背包。可換素材，但版面是手提包。", "authorKind": null, "authorText": null, "draft": "6 段、頁面顯示 00:14、9:16。若要改成背包，先看預覽，確認構圖不是只能放提把。沒有作者提示詞。"}, {"id": "capcut-bags", "industry": "bags", "fit": "closest", "title": "包包聯盟廣告", "original": "Bags Affiliate", "author": "Inspire Daily", "platform": "CapCut", "tool": "CapCut 樣板（在 App 內改）", "url": "https://www.capcut.com/template-detail/Bags-Affiliate/7474804273864297781", "preview": null, "specs": "頁面標籤：12、00:24、約 10.41K uses、比例 3:4", "fitNote": "頁面只寫 Bags，沒有寫後背包。", "authorKind": null, "authorText": null, "draft": "12 段、頁面顯示 00:24、比例 3:4。換成背包產品圖與短句。這不是背包專用樣板，也沒有作者提示詞。"}, {"id": "rive-purse", "industry": "bags", "fit": "closest", "title": "皮包三百六十度", "original": "Purse 360° Rotation", "author": "InnerRoadways", "platform": "Rive", "tool": "Rive 檔", "url": "https://rive.app/marketplace/23278-43583-purse-360-rotation/", "preview": null, "specs": "Rive Marketplace．頁面日期 30 August 2025", "fitNote": "2D 形狀做的皮包旋轉，不是背包。", "authorKind": "blurb", "authorText": "作者頁：用 2D 形狀做出 360 度旋轉的仿 3D 皮包，給產品展示、電商或介面動效。", "draft": "在 Rive 改形狀顏色與標誌，保留旋轉。要做成背包必須重畫輪廓，不能只換字。"}, {"id": "bag-intro", "industry": "bags", "fit": "closest", "title": "斜角產品開場可改色", "original": "Product Promo Intro", "author": "Mixkit", "platform": "Mixkit", "tool": "免費 After Effects 專案", "url": "https://mixkit.co/free-after-effects-templates/product-promo-intro-618/", "preview": "https://assets.mixkit.co/video-templates/618/thumbnails/preview-0002.jpg", "specs": "Mixkit 免費 AE 專案．價格標與圖片 placeholder", "fitNote": "通用產品開場，不是背包。圖片層放背包，價格標改售價，顏色改布料色。", "authorKind": "blurb", "authorText": "頁面一句：An angled product promo style intro with price tags and image placeholders.", "draft": "斜角版面。價格標改售價，圖片 placeholder 放背包正面與細節。頁面沒有秒數，以專案時間軸為準。"}]</script>
 <script>
-const INDUSTRY = {
-  skincare: "保養品",
-  supplements: "保健食品",
-  food: "食品",
-  bags: "背包"
-};
-const ITEMS = [
-  {
-    id: "ks-supercell",
-    industry: "skincare",
-    title: "Kate Somerville 精華滾珠",
-    original: "Kate Somerville Supercell Serum",
-    author: "SIMULATED／Mandy Stoller",
-    platform: "工作室網站",
-    url: "https://simulatedstudio.com/projects/kate-somerville-supercell",
-    motion: "約十五秒 CGI：滾珠頭、絲質精華與瓶身特寫。",
-    authorPrompt: null,
-    draft: "近黑背景，玻璃精華瓶緩慢自轉。滾珠頭接觸一道細光，透明精華沿曲面拉成絲，再收回瓶口。鏡頭只推一次，節奏安靜。"
-  },
-  {
-    id: "111-y",
-    industry: "skincare",
-    title: "111Skin 修護精華",
-    original: "111Skin Y-Theorem Repair Serum CGI",
-    author: "Lux Studio London／Guy Welch",
-    platform: "工作室網站",
-    url: "https://movingimage.london/productions/111skin-y-theorem-repair-serum-cgi-animation",
-    motion: "燈光、鏡頭與瓶身動畫，修護精華的 CGI 產品片。",
-    authorPrompt: null,
-    draft: "冷白桌面，修復精華瓶直立。一滴精華落下後在瓶肩散成薄膜，鏡頭繞半圈停在標籤。不要旁白，只要材質聲。"
-  },
-  {
-    id: "rayan",
-    industry: "skincare",
-    title: "RAYAN 琥珀精華",
-    original: "RAYAN skincare",
-    author: "Pivot Studio",
-    platform: "工作室網站",
-    url: "https://wepivotstudio.com/work/rayan",
-    motion: "全 CGI：琥珀色液滴、玻璃與氣泡的產品動態語言。",
-    authorPrompt: null,
-    draft: "琥珀玻璃瓶在暖色光裡微傾。氣泡從液面升起後停住，一滴精華懸在瓶口，再落回。色調只留琥珀與深棕。"
-  },
-  {
-    id: "fenty",
-    industry: "skincare",
-    title: "Fenty 夏日精華與蜜粉",
-    original: "Fenty. Summer Campaign",
-    author: "NotReal®／Valeria Moreiro（動畫指導 Macarena Mosquera）",
-    platform: "Behance",
-    url: "https://www.behance.net/gallery/230148577/Fenty-Summer-Campaign-",
-    motion: "保濕精華配氣泡與放大果凍水果，另有蜜粉段落。",
-    authorPrompt: null,
-    draft: "高飽和夏日桌面。保濕精華瓶被透明氣泡托起，旁邊果凍水果輕微彈動。切到蜜粉盒開合一次。節奏偏廣告，不超過二十秒。"
-  },
-  {
-    id: "shiseido",
-    industry: "skincare",
-    title: "資生堂怡麗絲爾時光精華",
-    original: "Shiseido Elixir Design Time Serum",
-    author: "GOOSEBUMPS／Gabriel Morala",
-    platform: "工作室網站",
-    url: "https://bygoosebumps.com/work/shiseido-elixir-design-time-serum/",
-    motion: "金色穹頂、乳霜與分子模擬，講膠原支撐。",
-    authorPrompt: null,
-    draft: "金色圓頂緩緩升起，乳霜在表面形成細密紋理，分子結構輕輕展開後收成瓶身。鏡頭穩定，像實驗室而不是派對。"
-  },
-  {
-    id: "skii",
-    industry: "skincare",
-    title: "SK-II 青春露",
-    original: "SK-II Facial Treatment Essence",
-    author: "jformento.",
-    platform: "Vimeo",
-    url: "https://vimeo.com/1172062706",
-    motion: "電影感 CGI，拆解 PITERA 的流動與品牌質地。",
-    authorPrompt: null,
-    draft: "深色空間裡，清澈精華像布一樣流動，經過瓶身後變成一層薄光。鏡頭橫移，停在經典瓶型。不要口播。"
-  },
-  {
-    id: "nature-elite",
-    industry: "skincare",
-    title: "Nature Elite 彩妝產品動畫",
-    original: "Nature Elite - Cosmetic 3D Product Animation",
-    author: "RainStyle production",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=mcNNy2aEqhw",
-    motion: "彩妝瓶罐的 3D 產品動畫。",
-    authorPrompt: null,
-    draft: "一組護膚瓶依序轉到正面，每瓶停半秒。最後一瓶打開，膏體或液體只露出一點。背景乾淨，適合直式裁切。"
-  },
-  {
-    id: "ahad",
-    industry: "skincare",
-    title: "護膚瓶 3D 短片",
-    original: "Skincare 3D Product Visualization",
-    author: "Ahad Animates",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=9fJaX-4DBfc",
-    motion: "Blender 短片：護膚瓶的產品視覺化。",
-    authorPrompt: null,
-    draft: "直式九比十六。霧面泵瓶從暗處轉出，泵頭按一下，乳霜在瓶口堆成小山再抹平。循環可接回第一幀。"
-  },
-  {
-    id: "laneige",
-    industry: "skincare",
-    title: "蘭芝 Glow & Grow",
-    original: "[OFFICIAL] LANEIGE - Glow & Grow Together",
-    author: "LANEIGE Thailand",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=8CqWcbKUEX0",
-    motion: "品牌廣告片，產品與人物一起出現，不是純產品循環。",
-    authorPrompt: null,
-    draft: "先給臉部光澤的近景，再切到乳霜罐被打開。人物手部只入鏡一次，最後停在罐子正面。可改成十五秒直式。"
-  },
-  {
-    id: "lrp",
-    industry: "skincare",
-    title: "理膚寶水禮盒降落",
-    original: "La Roche-Posay gift sets for Boots",
-    author: "One Agency",
-    platform: "工作室案例",
-    url: "https://oneagencymedia.co.uk/case_studies/la-roche-posay/",
-    motion: "禮盒由品牌降落傘帶著落下，落在 Boots 店前。",
-    authorPrompt: null,
-    draft: "三個禮盒掛著小型降落傘，從上往下，布料有重量。中央盒子正對鏡頭落地，包裝文字不被布遮住。結尾是店面與禮盒同框。"
-  },
-  {
-    id: "ordinary-jp",
-    industry: "skincare",
-    title: "The Ordinary 渋谷斑馬線",
-    original: "The Ordinary Japan CGI, Hyaluronic Acid 2% + B5",
-    author: "One Agency／Nicole Menzies",
-    platform: "工作室案例",
-    url: "https://oneagencymedia.co.uk/case_studies/the-ordinary-japan-cgi/",
-    motion: "人潮走過斑馬線，走出玻尿酸瓶的輪廓。",
-    authorPrompt: null,
-    draft: "俯視路口。號誌先換成品牌色，行人走過後地面留下滴管瓶的輪廓。動作清楚、不要複雜特效堆疊。"
-  },
-  {
-    id: "perla",
-    industry: "supplements",
-    title: "PerlaHelsa 保健包裝",
-    original: "PerlaHelsa CGI product video",
-    author: "MAD CGI",
-    platform: "工作室網站",
-    url: "https://www.madcgi.com/projects/perlahelsa",
-    motion: "包裝、成分微距與多色版本的 3D 產品動畫。",
-    authorPrompt: null,
-    draft: "保健瓶轉到標籤正面，切進成分粉末的微距，再回到包裝。做兩個色款切換，方便電商與限動。"
-  },
-  {
-    id: "ritual",
-    industry: "supplements",
-    title: "Ritual 從霧到清楚",
-    original: "Ritual Let's Be Clear",
-    author: "Scholar／創意總監 Will Johnson",
-    platform: "工作室網站",
-    url: "https://helloscholar.com/project/ritual-lets-be-clear",
-    motion: "霧氣裡瓶子逐漸對焦，膠囊以穩定節奏移動，主色是招牌黃。",
-    authorPrompt: "Let’s be clear.",
-    authorPromptNote: "頁面寫的是創意起點句，不是生成模型用的提示詞。",
-    draft: "畫面從柔焦霧氣開始，透明瓶與膠囊慢慢變清楚。主色只用一種黃。膠囊一顆接一顆經過焦平面，不要亂飛。"
-  },
-  {
-    id: "ag-swanson",
-    industry: "supplements",
-    title: "Athletic Greens 粉末與液體",
-    original: "Athletic Greens",
-    author: "Swanson Studio",
-    platform: "工作室網站",
-    url: "https://www.swansonstudio.us/work/athletic-greens",
-    motion: "用光與運動看粉末、液體、玻璃與金屬，偏儀式感的產品影像。",
-    authorPrompt: null,
-    draft: "綠粉落進清水，玻璃勺攪半圈就停。金屬蓋放在旁邊。光線乾淨，像編輯靜物而不是健身房廣告。"
-  },
-  {
-    id: "ag1-dc",
-    industry: "supplements",
-    title: "AG1 品牌短片 DC",
-    original: "AG1 by Athletic Greens / DC",
-    author: "Ivan Jurado",
-    platform: "Vimeo",
-    url: "https://vimeo.com/900759180",
-    motion: "AG1 品牌影片。頁面未寫分鏡細節。",
-    authorPrompt: null,
-    draft: "清晨桌面，綠色罐裝粉倒入杯中，水面只攪出一個旋。人只露手。最後是杯子與罐子並排。"
-  },
-  {
-    id: "ag1-yt",
-    industry: "supplements",
-    title: "AG1 官方影片",
-    original: "AG1 by Athletic Greens",
-    author: "AG1",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=lkH9owzJ3Pk",
-    motion: "品牌官方影片，作為保健食品廣告語氣的參考。",
-    authorPrompt: null,
-    draft: "一個人在廚房開罐、倒粉、喝下。中間插入成分以簡單圖示帶過，結尾是產品與日常桌面。"
-  },
-  {
-    id: "ibero",
-    industry: "supplements",
-    title: "IberoBiotics 腸道花園",
-    original: "IberoBiotics",
-    author: "Rocketansky／Storz & Escherich（客戶 Bayer，代理商 GGH MullenLowe）",
-    platform: "工作室網站",
-    url: "https://www.storzescherich.de/portfolio/iberobiotics/",
-    motion: "全 CGI 花園比喻腸道恢復：平衡、生長、自然過程。",
-    authorPrompt: null,
-    draft: "乾燥土壤慢慢長出整齊的植物，鏡頭從微距拉到一座小花園。不要卡通角色，用植物生長代表腸道狀態。"
-  },
-  {
-    id: "synteract",
-    industry: "supplements",
-    title: "Synteract Bimbi 益生菌角色",
-    original: "Synteract Bimbi",
-    author: "mBanga Studio／Pietro Ciccotti（客戶 OfMom）",
-    platform: "工作室網站",
-    url: "https://www.mbangastudio.com/synteract-bimbi/",
-    motion: "三個益生菌角色進入腸道後，頭上的植物長成彩色森林。",
-    authorPrompt: null,
-    draft: "三個小角色帶著幼苗走進柔軟的腸道空間，植物依序開花。語氣給兒童保健，動作清楚、顏色分開。"
-  },
-  {
-    id: "protexin",
-    industry: "supplements",
-    title: "Protexin 寵物保健",
-    original: "Protexin Veterinary",
-    author: "Holey & Moley（客戶 Protexin／T&S Advertising）",
-    platform: "工作室網站",
-    url: "https://holeyandmoley.com/portfolio/protexin-veterinary/",
-    motion: "角色動畫加上產品靜照的 3D 投影，做品牌說明。",
-    authorPrompt: null,
-    draft: "寵物與包裝同框。角色動作簡單，包裝用實拍感的轉動，不要把說明文字塞滿畫面。"
-  },
-  {
-    id: "cast-probiotics",
-    industry: "supplements",
-    title: "益生菌產品線模組",
-    original: "Probiotics",
-    author: "CAST PHARMA",
-    platform: "工作室網站",
-    url: "https://www.cast-pharma.com/portfolio/probiotics/",
-    motion: "五支產品分段說明，放大窗標出腸道三個作用區。",
-    authorPrompt: null,
-    draft: "先總覽腸道三個區域，再一支產品對一個區域。每段可獨立剪出。風格跟既有品牌主視覺，不要另做一套。"
-  },
-  {
-    id: "poppi",
-    industry: "food",
-    title: "POPPI 汽水罐變形",
-    original: "POPPI",
-    author: "PrePost 3D",
-    platform: "工作室網站",
-    url: "https://www.prepost3d.com/poppi",
-    motion: "罐身變形、液體模擬、水果與覆盆子爆開。",
-    authorPrompt: null,
-    draft: "汽水罐先被捏出一點，再彈回。水果從罐口爆開後收成液面。顏色跟口味一致，適合直式。"
-  },
-  {
-    id: "ld-cody",
-    industry: "food",
-    title: "Liquid Death 逐格動態",
-    original: "Liquid Death — Death To Plastic",
-    author: "Cody Pham",
-    platform: "作品集",
-    url: "https://www.cody-pham.com/work/liquid-death",
-    motion: "逐格畫出來的動態廣告，不是寫實產品轉台。",
-    authorPrompt: null,
-    draft: "鋁罐以逐格方式被畫出來，塑膠瓶在旁邊碎掉或退場。線條粗、對比高，最後只留罐子。"
-  },
-  {
-    id: "ld-official",
-    industry: "food",
-    title: "Liquid Death 官方廣告",
-    original: "Liquid Death - Hey Kids, Murder Your Thirst",
-    author: "Liquid Death",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=jYkKBXqqunE",
-    motion: "品牌官方廣告片，語氣誇張，產品是鋁罐水。",
-    authorPrompt: null,
-    draft: "把日常喝水拍成過分認真的廣告。罐子始終清楚，口號只留一句，結尾是罐身正面。"
-  },
-  {
-    id: "ld-spec",
-    industry: "food",
-    title: "Liquid Death 自製規格廣告",
-    original: "Liquid Death - MURDER YOUR THIRST | Blender 3.0 Spec Ad",
-    author: "JOVAUGHN",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=jHEBhGMkm18",
-    motion: "Blender 自製規格廣告，不是品牌官方片。",
-    authorPrompt: null,
-    draft: "黑色背景，鋁罐旋轉，水花打在罐身。標題用粗字，節奏快，標明這是練習規格不是正式廣告。"
-  },
-  {
-    id: "apple-burst",
-    industry: "food",
-    title: "蘋果汽水罐",
-    original: "Apple Burst Soda Can 3D Animation",
-    author: "LAKSHANC",
-    platform: "YouTube",
-    url: "https://www.youtube.com/watch?v=W00YSH0ULsU",
-    motion: "熱帶沙灘情境的汽水罐 CGI。",
-    authorPrompt: null,
-    draft: "沙灘光，綠色汽水罐，蘋果切片與氣泡同時進鏡。罐身先轉正面再噴一點液體。十五秒內結束。"
-  },
-  {
-    id: "sodastream",
-    industry: "food",
-    title: "SodaStream Duo 產品演示",
-    original: "SodaStream Duo 3D product demo",
-    author: "BlackBoard Studios",
-    platform: "工作室網站",
-    url: "https://www.blackboardvfx.com/home/product-demo-sodastream-duo",
-    motion: "以 3D 為主，加兩段高速實拍，示範氣瓶快接。",
-    authorPrompt: null,
-    draft: "機器側面打開，氣瓶卡進去，氣泡在杯中升起。功能要看懂，少用裝飾性鏡頭。"
-  },
-  {
-    id: "unica",
-    industry: "food",
-    title: "Gandour 巧克力威化",
-    original: "Chocolate Wafer Animation / Unica Max",
-    author: "XO3D（客戶 Gandour）",
-    platform: "工作室案例",
-    url: "https://xo3d.co.uk/case-studies/gandour-chocolate-wafer-animation/",
-    motion: "層次、融化巧克力與威化掰斷，另有十秒短版。",
-    authorPrompt: null,
-    draft: "威化棒從中間掰開，露出層次，巧克力沿著斷面流下。最後三個口味包裝並排。可剪成六秒。"
-  },
-  {
-    id: "yamama",
-    industry: "food",
-    title: "Yamama 抹醬漩渦",
-    original: "Yamama Spread Animation",
-    author: "XO3D（客戶 Gandour）",
-    platform: "工作室案例",
-    url: "https://xo3d.co.uk/case-studies/gandour-yamama-spread-animation/",
-    motion: "三種口味漩渦、撕箔、開關蓋，以及向日葵繞罐。",
-    authorPrompt: null,
-    draft: "罐蓋打開，抹醬轉出一個漩渦。撕開封膜的瞬間給特寫。若要成分故事，讓一朵向日葵在罐旁展開。"
-  },
-  {
-    id: "blazo",
-    industry: "food",
-    title: "Blazo Gold 威化",
-    original: "Blazo Gold",
-    author: "Squirrel（客戶 Egypt Foods）",
-    platform: "工作室網站",
-    url: "https://squirrel-studio.com/work/blazo-gold/",
-    motion: "包裝與產品動態，加上巧克力層次。",
-    authorPrompt: null,
-    draft: "金色包裝先入鏡，威化斷面轉到鏡頭前，巧克力層慢慢分開。光要像食物廣告，不要金屬感太重。"
-  },
-  {
-    id: "alpina",
-    industry: "food",
-    title: "Alpina × Juan Valdez 優格",
-    original: "Alpina × Juan Valdez Product Launch",
-    author: "Madness／Enrique Wilches、Andrés Marantá",
-    platform: "工作室網站",
-    url: "https://www.madnss.com/alpina-juan-valdez",
-    motion: "咖啡豆、液體、包裝與濺起，服務新品上市。",
-    authorPrompt: null,
-    draft: "咖啡豆落下，優格液面濺起，包裝在旁邊保持清楚。畫面要能聞到新鮮，但不要堆太多食材。"
-  },
-  {
-    id: "kraft",
-    industry: "food",
-    title: "Kraft 零食實驗室",
-    original: "Kraft Snack Bites",
-    author: "Tendril（客戶 Kraft，代理商 Taxi Canada）",
-    platform: "工作室網站",
-    url: "https://tendril.ca/work/kraft-snack-bites/",
-    motion: "五段看起來像實驗室測試的寫實 CG，食物用攝影測量。",
-    authorPrompt: null,
-    draft: "小零食放上一個看起來能動的測試機。花生醬、果乾或穀物各自有一個小測試。語氣輕，但食物要像真的。"
-  },
-  {
-    id: "tenaya",
-    industry: "bags",
-    title: "Sierra Designs Tenaya 45L",
-    original: "TENAYA PACK 45L",
-    author: "VEIG（客戶 Sierra Designs）",
-    platform: "工作室網站",
-    url: "https://veig.com/sierra-tenaya-pack",
-    motion: "掃描主體做成約三十秒社群片，近看結構與材質，CG 加動態。",
-    authorPrompt: null,
-    draft: "背包從背板到肩帶逐段靠近。拉鍊與織物要有重量。最後背在身上走兩步，適合直式。"
-  },
-  {
-    id: "tourister",
-    industry: "bags",
-    title: "American Tourister 亞洲",
-    original: "American Tourister Asia 2024",
-    author: "Finding Pictures",
-    platform: "工作室網站",
-    url: "https://www.finding.pictures/work/american-tourister",
-    motion: "旅行背包與行李箱的 3D 定格感，拉鍊與蓋子開合。",
-    authorPrompt: null,
-    draft: "背包與行李箱像定格一樣一格格打開。拉鍊齒清楚。場景保持旅行，但產品始終是主角。"
-  },
-  {
-    id: "away",
-    industry: "bags",
-    title: "AWAY 重新設計",
-    original: "AWAY | Redesigned",
-    author: "Dada Projects",
-    platform: "Vimeo",
-    url: "https://vimeo.com/914792165",
-    motion: "全 CGI 攝影棚，旅行包與行李箱走一條虛擬伸展台。",
-    authorPrompt: null,
-    draft: "乾淨棚裡，行李箱與旅行包依次轉到正面，背景只有一點旅行地景的影子。不要真人。"
-  },
-  {
-    id: "tombihn",
-    industry: "bags",
-    title: "TOM BIHN Tri-Star",
-    original: "Tri-Star travel bag by TOM BIHN",
-    author: "TOM BIHN",
-    platform: "Vimeo",
-    url: "https://vimeo.com/74153011",
-    motion: "品牌自己的旅行袋產品片。頁面說明很短，不是背包專題。",
-    authorPrompt: null,
-    draft: "旅行袋放在桌面，打開隔層，手把一件物品放進去再拉上。節奏慢，讓口袋結構看懂。"
-  },
-  {
-    id: "rains",
-    industry: "bags",
-    title: "RAINS 旅行系列",
-    original: "RAINS SS24 travel",
-    author: "ZÜNC Studio",
-    platform: "工作室網站",
-    url: "https://www.zunc.studio/archive/rains-travel",
-    motion: "Texel 拉桿箱被一塊塊組起來，四個產品的動態給社群與官網。偏行李箱。",
-    authorPrompt: null,
-    draft: "箱子從零件組到完成。每完成一個部件停一下。防水布料用側光。可剪成四段產品循環。"
-  },
-  {
-    id: "clubglove",
-    industry: "bags",
-    title: "Club Glove 高爾夫旅行袋",
-    original: "Club Glove product videos",
-    author: "Motiv Studios",
-    platform: "工作室網站",
-    url: "https://motivstudios.co/projects/projects-case-studies-clubglobe-product-videos",
-    motion: "棚內實拍產品片，搖臂與穩定器，不是純動畫。",
-    authorPrompt: null,
-    draft: "高爾夫旅行袋在棚內轉一圈，拉鍊打開看到球桿位。燈光乾淨，像產品目錄影片。"
-  },
-  {
-    id: "millican",
-    industry: "bags",
-    title: "Millican 從瓶子到背包",
-    original: "Behind the Seams",
-    author: "Found Studio（客戶 Millican）",
-    platform: "工作室網站",
-    url: "https://www.found-studio.com/work/millican/",
-    motion: "全 CG：回收塑膠瓶變成背包布料，講製程而不是只轉產品。",
-    authorPrompt: null,
-    draft: "塑膠瓶碎開、融成纖維、織成布，最後收成一只背包。每一步都要認得材質。結尾才給產品正面。"
-  },
-  {
-    id: "rollink",
-    industry: "bags",
-    title: "Rollink 可折疊登機箱",
-    original: "Flex 360° Collapsible Suitcase",
-    author: "XO3D（客戶 Rollink）",
-    platform: "工作室案例",
-    url: "https://xo3d.co.uk/case-studies/rollink-flex-360/",
-    motion: "布料中段折疊、教學步驟與上市影片。是行李箱，不是後背包。",
-    authorPrompt: null,
-    draft: "箱子從薄到展開，布料中段真的塌下去再撐起。接著三個步驟：打開、裝入、折回。功能優先。"
-  },
-  {
-    id: "coussin",
-    industry: "bags",
-    title: "Louis Vuitton Coussin",
-    original: "Coussin bag",
-    author: "Stylo Creative",
-    platform: "STASH",
-    url: "https://www.stashmedia.tv/stylo-creative-slips-onto-the-stash-radar-with-film-for-louis-vuittons-coussin-bag/",
-    motion: "皮、織帶與金屬鍊一起模擬，實驗性奢侈包影片。不是背包。",
-    authorPrompt: null,
-    draft: "包放在暗色空間，鍊條與織帶同時有重量。皮革擠壓後回彈。鏡頭慢，只看材質。"
-  }
-];
-
+const INDUSTRY = { skincare: "保養品", supplements: "保健食品", food: "食品", bags: "背包" };
+const ITEMS = JSON.parse(document.getElementById("catalog").textContent);
 const grid = document.getElementById("grid");
 const count = document.getElementById("count");
 const empty = document.getElementById("empty");
@@ -743,67 +153,88 @@ const detailBody = document.getElementById("detail-body");
 let filter = "all";
 
 function esc(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
 function visible() {
   const query = q.value.trim().toLowerCase();
   return ITEMS.filter(item => {
     if (filter !== "all" && item.industry !== filter) return false;
     if (!query) return true;
-    const blob = [item.title, item.original, item.author, item.motion, item.platform, INDUSTRY[item.industry], item.draft].join(" ").toLowerCase();
+    const blob = [item.title, item.original, item.author, item.tool, item.platform, item.specs, item.draft, item.authorText, item.fitNote, INDUSTRY[item.industry]].join(" ").toLowerCase();
     return blob.includes(query);
   });
 }
-
+function stepLine(item) {
+  if (item.authorKind === "steps") return "作者公開了操作步驟。草稿是我們依那些步驟寫的中文。";
+  if (item.authorKind === "blurb") return "作者只留了一句說明，沒有提示詞。下面的步驟是我們整理的草稿。";
+  return "原頁沒有公開提示詞或步驟。下面是我們整理的草稿。";
+}
 function render() {
   const list = visible();
-  count.textContent = list.length + " 筆參考";
+  const steps = list.filter(i => i.authorKind === "steps").length;
+  count.textContent = list.length + " 筆可操作樣板．其中 " + steps + " 筆有作者公開的操作步驟";
   empty.hidden = list.length !== 0;
-  grid.innerHTML = list.map(item => `
-    <button class="card" type="button" data-id="${item.id}">
-      <div class="poster ${item.industry}">
-        <span class="ind">${INDUSTRY[item.industry]}</span>
-        <span class="mark">${esc(item.platform)}</span>
+  grid.innerHTML = list.map(item => {
+    const poster = item.preview
+      ? `<div class="poster"><img src="${esc(item.preview)}" alt=""></div>`
+      : `<div class="poster"><div class="fallback ${item.industry}"><span>${INDUSTRY[item.industry]}</span><span>${esc(item.platform)}</span></div></div>`;
+    const fit = item.fit === "closest" ? `<span class="badge warn">相近，可改色或換圖</span>` : `<span class="badge">此產業</span>`;
+    const who = item.authorKind === "steps" ? `<span class="badge">作者步驟</span>` : `<span class="badge">我們的草稿</span>`;
+    return `<article class="card">
+      <button class="open" type="button" data-id="${esc(item.id)}">
+        ${poster}
+        <div class="body">
+          <div class="badges">${fit}${who}</div>
+          <h2>${esc(item.title)}</h2>
+          <div class="meta">${esc(item.author)}．${esc(item.tool)}</div>
+          <p class="snippet"><strong>範例</strong>　${esc(item.platform)} 上的預覽頁</p>
+          <p class="snippet"><strong>提示詞／操作步驟</strong>　${esc(stepLine(item))}</p>
+        </div>
+      </button>
+      <div class="card-links">
+        <a class="example" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">範例</a>
+        <a class="source" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">打開來源</a>
       </div>
-      <div class="body">
-        <h2>${esc(item.title)}</h2>
-        <div class="meta">${esc(item.author)}</div>
-        <div class="motion">${esc(item.motion)}</div>
-      </div>
-    </button>
-  `).join("");
+    </article>`;
+  }).join("");
 }
-
 function openItem(id) {
   const item = ITEMS.find(x => x.id === id);
   if (!item) return;
-  const promptBlock = item.authorPrompt
-    ? `<div class="block"><h4>作者在頁面公開的句子</h4><p>${esc(item.authorPrompt)}</p><p class="meta">${esc(item.authorPromptNote || "")}</p></div>`
-    : `<div class="block"><h4>作者提示詞</h4><p>原貼未公開提示詞</p></div>`;
+  const shot = item.preview ? `<img class="shot" src="${esc(item.preview)}" alt="來源封面預覽">` : `<p class="meta">此頁沒有穩定的封面圖，範例就是來源頁本身。</p>`;
+  const authorBlock = item.authorText
+    ? `<div class="block"><span class="label">${item.authorKind === "steps" ? "作者公開的操作說明" : "作者頁面原文，不是提示詞"}</span><h4>${item.authorKind === "steps" ? "作者寫的步驟" : "作者留在頁上的句子"}</h4><p>${esc(item.authorText)}</p></div>`
+    : `<div class="block"><span class="label">作者提示詞</span><h4>原頁未公開提示詞</h4><p>這筆沒有作者寫的提示詞或操作清單。</p></div>`;
+  const fit = item.fit === "closest" ? `<p>${esc(item.fitNote || "")}</p>` : "";
   detailBody.innerHTML = `
     <h3>${esc(item.title)}</h3>
     <p class="en">${esc(item.original)}</p>
     <dl>
-      <dt>產業</dt><dd>${INDUSTRY[item.industry]}</dd>
+      <dt>產業</dt><dd>${INDUSTRY[item.industry]}${item.fit === "closest" ? "（相近）" : ""}</dd>
       <dt>作者</dt><dd>${esc(item.author)}</dd>
+      <dt>工具</dt><dd>${esc(item.tool)}</dd>
       <dt>平台</dt><dd>${esc(item.platform)}</dd>
-      <dt>動作</dt><dd>${esc(item.motion)}</dd>
+      <dt>規格</dt><dd>${esc(item.specs)}</dd>
     </dl>
-    ${promptBlock}
+    ${fit}
+    <div class="block">
+      <h4>範例</h4>
+      <p>預覽與下載都在原頁。我們沒有把影片或專案檔放上這個網站。</p>
+      ${shot}
+      <p><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">打開範例來源</a></p>
+    </div>
+    ${authorBlock}
     <div class="block">
       <span class="label">我們整理的草稿</span>
-      <h4>可改寫的拍攝提示詞草稿</h4>
+      <h4>提示詞／操作步驟</h4>
       <p>${esc(item.draft)}</p>
     </div>
-    <a class="source" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">打開原始來源</a>
   `;
   if (!dialog.open) dialog.showModal();
 }
-
 grid.addEventListener("click", e => {
-  const card = e.target.closest("button.card");
-  if (card) openItem(card.dataset.id);
+  const btn = e.target.closest("button.open");
+  if (btn) openItem(btn.dataset.id);
 });
 document.querySelectorAll("button.chip").forEach(btn => {
   btn.addEventListener("click", () => {
